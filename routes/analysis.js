@@ -38,7 +38,7 @@ router.post('/run', async (req, res) => {
         const linkedInInputs = keyDecisionMakers.map(person => ({ name: person }));
         
         // Call the LinkedIn scraper endpoint
-        const linkedInResponse = await axios.post('http://localhost:5000/api/scrape/scrape-keyword', {
+        const linkedInResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/scrape/scrape-keyword', {
           inputs: linkedInInputs
         });
         
@@ -57,7 +57,7 @@ router.post('/run', async (req, res) => {
     if (formData.companyName) {
       try {
           // Call the Firecrawl API to scrape company data
-          const firecrawlResponse = await axios.post('http://localhost:5000/api/firecrawl/scrape', {
+          const firecrawlResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/firecrawl/scrape', {
             companyName: formData.companyName
           });
           analysisResults.companyData = firecrawlResponse.data;
@@ -75,7 +75,7 @@ router.post('/run', async (req, res) => {
     if (formData.companyName) {
       try {
         // Call the VPScrapper API to find procurement executives
-        const vpScrapperResponse = await axios.post('http://localhost:5000/api/vp/find-procurement-execs', {
+        const vpScrapperResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/vp/find-procurement-execs', {
           companyName: formData.companyName
         });
         
@@ -100,7 +100,7 @@ router.post('/run', async (req, res) => {
     if (hasProjectDetails && hasIndustry) {
       try {
         // Call the /analyze endpoint for the company
-        const analyzeResponse = await axios.post('http://localhost:5000/api/deepseek/analyze', {
+        const analyzeResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/deepseek/analyze', {
           competitorName: formData.companyName,
           dataType: 'pricing'
         });

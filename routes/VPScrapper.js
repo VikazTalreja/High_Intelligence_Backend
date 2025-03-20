@@ -204,7 +204,7 @@ router.post('/find-procurement-execs', async (req, res) => {
             
             // Scrape the LinkedIn profile
             try {
-              const profileResponse = await axios.post('http://localhost:5000/api/scrape/profile', {
+              const profileResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/scrape/profile', {
                 profileUrls: [linkedInUrl]
               });
               

@@ -74,7 +74,7 @@ const generateKeywords = (input) => {
             if (firstLink.includes('linkedin.com')) {
               // Scrape the LinkedIn profile for this link
               try {
-                const profileResponse = await axios.post('http://localhost:5000/api/scrape/profile', {
+                const profileResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/scrape/profile', {
                   profileUrls: [firstLink]
                 });
 
