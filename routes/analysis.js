@@ -26,7 +26,7 @@ router.post('/run', async (req, res) => {
       companyData: null,
       marketData: null,
       aiInsights: null,
-      procurementExecutives: null, // Add field for procurement executives
+      procurementExecutives: null,
       CompetitorsEngagement: [],
       errors: []
     };
@@ -81,9 +81,6 @@ router.post('/run', async (req, res) => {
         
         analysisResults.procurementExecutives = vpScrapperResponse.data;
         console.log('Successfully found procurement executives');
-        
-        // We're not adding procurement executives to LinkedIn results anymore
-        // to avoid duplication in the frontend
       } catch (vpError) {
         console.error('Error finding procurement executives:', vpError);
         analysisResults.errors.push({
@@ -93,31 +90,90 @@ router.post('/run', async (req, res) => {
       }
     }
     
-    // Check if projectDetails, any selected competitor, and industry are present
-    const hasProjectDetails = formData.projectDetails && formData.projectDetails.trim() !== '';
-    const hasIndustry = formData.industry && formData.industry.trim() !== '';
-
-    if (hasProjectDetails && hasIndustry) {
+    // 4. Process competitor analysis
+    if (formData.competitors && Array.isArray(formData.competitors)) {
       try {
-        // Call the /analyze endpoint for the company
-        const analyzeResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/deepseek/analyze', {
-          competitorName: formData.companyName,
-          dataType: 'pricing'
-        });
+        // Get selected competitors
+        const selectedCompetitors = formData.competitors.filter(comp => comp.selected);
+        console.log(`Processing ${selectedCompetitors.length} selected competitors`);
 
-        // Add the analysis result
-        analysisResults.CompetitorsEngagement = [{
-          competitor: formData.companyName,
-          analysis: analyzeResponse.data
-        }];
-        console.log(`Successfully analyzed competitor engagement for ${formData.companyName}:`, analyzeResponse.data);
-      } catch (analyzeError) {
-        console.error(`Error analyzing competitor engagement for ${formData.companyName}:`, analyzeError);
+        // Process competitors in batches of 3 to avoid overwhelming the server
+        const batchSize = 3;
+        const allAnalyses = [];
+        
+        for (let i = 0; i < selectedCompetitors.length; i += batchSize) {
+          const batch = selectedCompetitors.slice(i, i + batchSize);
+          console.log(`Processing batch ${i/batchSize + 1} with ${batch.length} competitors`);
+          
+          const batchAnalyses = await Promise.all(
+            batch.map(async (competitor) => {
+              try {
+                console.log(`Starting analysis for competitor: ${competitor.name}`);
+                
+                // Call the otherCompetitor analyze endpoint
+                const otherCompResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/othercompetitor/analyze', {
+                  companyName: formData.companyName,
+                  competitorName: competitor.name,
+                  dataType: formData.projectDetails || 'TMT' // Default to TMT, can be modified based on requirements
+                });
+
+                if (otherCompResponse.data.success) {
+                  console.log(`Successfully analyzed competitor: ${competitor.name}`);
+                  return {
+                    competitor: competitor.name,
+                    ...otherCompResponse.data.analysis
+                  };
+                }
+                
+                console.log(`Analysis failed for competitor: ${competitor.name}`);
+                analysisResults.errors.push({
+                  source: 'CompetitorAnalysis',
+                  message: `Analysis failed for ${competitor.name}: No success response`
+                });
+                return null;
+              } catch (error) {
+                console.error(`Error analyzing competitor ${competitor.name}:`, error);
+                analysisResults.errors.push({
+                  source: 'CompetitorAnalysis',
+                  message: `Error analyzing ${competitor.name}: ${error.message}`,
+                  details: error.response?.data || error.message
+                });
+                return null;
+              }
+            })
+          );
+
+          // Add successful analyses from this batch
+          allAnalyses.push(...batchAnalyses.filter(analysis => analysis !== null));
+          
+          // Add a small delay between batches to prevent rate limiting
+          if (i + batchSize < selectedCompetitors.length) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+        }
+
+        // Add all successful analyses to the results
+        if (allAnalyses.length > 0) {
+          analysisResults.CompetitorsEngagement = allAnalyses;
+          console.log(`Successfully completed analysis for ${allAnalyses.length} out of ${selectedCompetitors.length} competitors`);
+        } else {
+          console.log('No successful competitor analyses completed');
+          analysisResults.errors.push({
+            source: 'CompetitorsEngagement',
+            message: 'No competitor analyses were successful'
+          });
+        }
+
+      } catch (error) {
+        console.error('Error processing competitors:', error);
         analysisResults.errors.push({
           source: 'CompetitorsEngagement',
-          message: `Error analyzing ${formData.companyName}: ${analyzeError.message}`
+          message: 'Failed to process competitors',
+          details: error.message
         });
       }
+    } else {
+      console.log('No competitors to analyze or invalid competitors data');
     }
     
     // Return the combined results
