@@ -8,19 +8,22 @@ const apifyClient = new ApifyClient({
 });
 
 
-const generateKeywords = (input) => {
-    return `${input} meresu LinkedIn`;
+const generateKeywords = (name, companyName) => {
+    return `${name} ${companyName} LinkedIn`;
   };
   
   // Endpoint to handle keyword-based scraping
   router.post('/scrape-keyword', async (req, res) => {
     try {
-      const { inputs } = req.body;
+      const { inputs, companyName } = req.body;
       
       // Check if inputs is provided and is an array
       if (!inputs || !Array.isArray(inputs) || inputs.length === 0) {
         return res.status(400).json({ error: 'Please provide an array of input objects' });
       }
+
+      // Log the company name for debugging
+      console.log('Processing for company:', companyName);
 
       const results = [];
       const axios = require('axios');
@@ -32,6 +35,7 @@ const generateKeywords = (input) => {
           if (!inputObj.name) {
             results.push({
               input: inputObj,
+              company: companyName,
               error: 'Each input object must have a name property'
             });
             continue;
@@ -40,9 +44,8 @@ const generateKeywords = (input) => {
           const name = inputObj.name.trim();
           console.log(`Processing input name: ${name}`);
 
-          // Generate keywords
-          const keywords = generateKeywords(name);
-
+          // Generate keywords with name and company
+          const keywords = generateKeywords(name, companyName);
           // Use SerperDev to search for the keywords
           let data = JSON.stringify({
             "q": keywords,
@@ -80,6 +83,7 @@ const generateKeywords = (input) => {
 
                 results.push({
                   input: inputObj,
+                  company: companyName,
                   searchQuery: keywords,
                   link: firstLink,
                   title: firstResult.title,
@@ -89,6 +93,7 @@ const generateKeywords = (input) => {
                 console.error(`Error fetching profile for ${name}:`, profileError.message);
                 results.push({
                   input: inputObj,
+                  company: companyName,
                   searchQuery: keywords,
                   link: firstLink,
                   title: firstResult.title,
@@ -98,6 +103,7 @@ const generateKeywords = (input) => {
             } else {
               results.push({
                 input: inputObj,
+                company: companyName,
                 searchQuery: keywords,
                 link: firstLink,
                 title: firstResult.title,
@@ -107,6 +113,7 @@ const generateKeywords = (input) => {
           } else {
             results.push({
               input: inputObj,
+              company: companyName,
               searchQuery: keywords,
               error: 'No search results found'
             });
@@ -115,6 +122,7 @@ const generateKeywords = (input) => {
           console.error(`Error processing input:`, inputError.message);
           results.push({
             input: inputObj,
+            company: companyName,
             error: `Error processing input: ${inputError.message}`
           });
         }
@@ -124,6 +132,7 @@ const generateKeywords = (input) => {
       res.json({ 
         success: true, 
         count: results.length,
+        company: companyName,
         results: results 
       });
     } catch (error) {
