@@ -9,7 +9,12 @@ const apifyClient = new ApifyClient({
 
 
 const generateKeywords = (name, companyName) => {
-    return `${name} ${companyName} LinkedIn`;
+    // Clean and format the inputs
+    const cleanName = name.trim();
+    const cleanCompany = companyName.trim();
+    
+    // Create search query that prioritizes finding the person at the company
+    return `${cleanName} "${cleanCompany}" LinkedIn`;
   };
   
   // Endpoint to handle keyword-based scraping
@@ -31,17 +36,20 @@ const generateKeywords = (name, companyName) => {
       // Process each input object
       for (const inputObj of inputs) {
         try {
-          // Validate that the input object has a name property
-          if (!inputObj.name) {
+          // Handle both string inputs and object inputs
+          const nameValue = typeof inputObj === 'string' ? inputObj : inputObj.name;
+          
+          // Validate that we have a valid name
+          if (!nameValue || typeof nameValue !== 'string') {
             results.push({
               input: inputObj,
               company: companyName,
-              error: 'Each input object must have a name property'
+              error: 'Invalid name provided'
             });
             continue;
           }
 
-          const name = inputObj.name.trim();
+          const name = nameValue.trim();
           console.log(`Processing input name: ${name}`);
 
           // Generate keywords with name and company

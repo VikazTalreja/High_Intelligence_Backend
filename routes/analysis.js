@@ -39,7 +39,8 @@ router.post('/run', async (req, res) => {
         
         // Call the LinkedIn scraper endpoint
         const linkedInResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/scrape/scrape-keyword', {
-          inputs: linkedInInputs
+          inputs: linkedInInputs,
+          companyName :formData.companyName
         });
         
         analysisResults.linkedInData = linkedInResponse.data;
@@ -112,7 +113,7 @@ router.post('/run', async (req, res) => {
                 
                 // Call the otherCompetitor analyze endpoint
                 const otherCompResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/othercompetitor/analyze', {
-                  companyName: formData.companyName,
+                  companyName: "JSW Steel",
                   competitorName: competitor.name,
                   dataType: formData.projectDetails || 'TMT' // Default to TMT, can be modified based on requirements
                 });

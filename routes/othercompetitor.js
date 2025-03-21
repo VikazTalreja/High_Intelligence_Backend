@@ -204,7 +204,7 @@ router.post('/analyze', async (req, res) => {
     if (!analysisJson || typeof analysisJson !== 'object') {
       throw new Error('Invalid JSON structure in response');
     }
-
+    console.log(analysisJson);
     res.json({
       success: true,
       competitor: competitorName,
