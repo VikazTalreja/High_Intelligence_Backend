@@ -2,7 +2,8 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
-const contextJSW = `JSW Steel: A Comprehensive Analysis of India's Leading Steel Manufacturer
+
+const JSWcontext=`JSW Steel: A Comprehensive Analysis of India's Leading Steel Manufacturer
 
 Overview
 JSW Steel is the flagship company of the US$ 24 billion JSW Group and one of India's top integrated steel manufacturers with a strong global presence. 
@@ -86,7 +87,7 @@ Long Steel Products
 
 Here are the estimated prices per tonne and per kg for various JSW Steel products:
 
-Here's the information in regular text format:
+Here’s the information in regular text format:
 
 Flat Products
 	•	Hot Rolled (HR) Steel: ₹54,000 - ₹60,000 per tonne (₹54 - ₹60 per kg)
@@ -181,7 +182,7 @@ Mining Relationships
 - Captive sources meet 43% of iron ore needs (FY 2022)
 - Global pursuits:
   - Competing for Blackwater coal mine (Australia, 2024)
-  - Proposal for 75% stake in Teck Resources' coal assets (August 2023)
+  - Proposal for 75% stake in Teck Resources’ coal assets (August 2023)
   - Assets in USA, Chile, and Mozambique
 
 Business Model and Strategic Approach
@@ -221,30 +222,30 @@ Future Outlook and Strategic Initiatives
 6. Global mining acquisitions for raw material security
 
 Conclusion
-JSW Steel leads India's steel industry with strategic growth, diverse products, and strong partnerships. It maintains high customer satisfaction despite delivery challenges and supports critical infrastructure projects. With ambitious plans and global investments, it is poised for continued success in a cyclical market.
+JSW Steel leads India’s steel industry with strategic growth, diverse products, and strong partnerships. It maintains high customer satisfaction despite delivery challenges and supports critical infrastructure projects. With ambitious plans and global investments, it is poised for continued success in a cyclical market.
 
 
-It looks like you want the text formatted normally without any special formatting. Here's the content in plain text:
+It looks like you want the text formatted normally without any special formatting. Here’s the content in plain text:
 
 ⸻
 
-JSW Steel has established itself as a crucial player in India's infrastructure development and automotive sector through its high-quality steel supply partnerships. This report provides a detailed analysis of JSW Steel's confirmed projects across various infrastructure segments and automotive collaborations, documenting their contributions to India's growth story.
+JSW Steel has established itself as a crucial player in India’s infrastructure development and automotive sector through its high-quality steel supply partnerships. This report provides a detailed analysis of JSW Steel’s confirmed projects across various infrastructure segments and automotive collaborations, documenting their contributions to India’s growth story.
 
-JSW Steel played a key role in the Lucknow-Agra Expressway, supplying high-quality steel on schedule, which enabled the expressway to be completed in just 23 months. Similarly, in the Eastern Freeway project in Mumbai, the company provided specialized steel grades and technical consultations that optimized material usage and reduced construction time. Their corrosion-resistant steel ensured durability in Mumbai's humid climate.
+JSW Steel played a key role in the Lucknow-Agra Expressway, supplying high-quality steel on schedule, which enabled the expressway to be completed in just 23 months. Similarly, in the Eastern Freeway project in Mumbai, the company provided specialized steel grades and technical consultations that optimized material usage and reduced construction time. Their corrosion-resistant steel ensured durability in Mumbai’s humid climate.
 
-In the airport infrastructure sector, JSW Steel supplied structural steel for the IGI Delhi Airport, working closely with architects to balance aesthetics with structural integrity. They also provided custom steel solutions for Mumbai's Terminal 2 and have been selected for the Terminal 1 redevelopment project based on past performance. Their involvement in regional airport projects, like Durgapur/Andal Airport, further strengthens their portfolio.
+In the airport infrastructure sector, JSW Steel supplied structural steel for the IGI Delhi Airport, working closely with architects to balance aesthetics with structural integrity. They also provided custom steel solutions for Mumbai’s Terminal 2 and have been selected for the Terminal 1 redevelopment project based on past performance. Their involvement in regional airport projects, like Durgapur/Andal Airport, further strengthens their portfolio.
 
-For port infrastructure, JSW Steel supplied marine-grade steel for Mundra Port, Vishakhapatnam Port, and Tuticorin Port, ensuring corrosion resistance in coastal environments. The company's in-house projects, such as the Jaigarh Port Expansion and Dharamtar Port Expansion, benefit from seamless integration between steel supply and infrastructure requirements, allowing for optimized designs and reduced environmental impact.
+For port infrastructure, JSW Steel supplied marine-grade steel for Mundra Port, Vishakhapatnam Port, and Tuticorin Port, ensuring corrosion resistance in coastal environments. The company’s in-house projects, such as the Jaigarh Port Expansion and Dharamtar Port Expansion, benefit from seamless integration between steel supply and infrastructure requirements, allowing for optimized designs and reduced environmental impact.
 
 JSW Steel has been a consistent supplier for urban transit projects, providing high-grade rebars for Delhi Metro, Mumbai Metro, Bangalore Metro, and Chennai Metro. Their ability to meet rigorous quality standards and deliver steel on time has made them a preferred partner for metro projects across India. They also contributed to the Delhi-Mumbai Dedicated Freight Corridor, supplying 22,000 MT of steel to meet the strict specifications of this massive infrastructure project.
 
-In industrial infrastructure, JSW Steel supplied specialized steel for India's largest blast furnace, collaborating closely with Larsen & Toubro. Their slurry pipeline project, set for completion in 2027, uses steel designed to withstand the abrasive nature of slurry transport. The company also provided heat-resistant steel for Bharat Petroleum's Kochi Refinery and nuclear-grade steel for the Indira Gandhi Centre for Atomic Research.
+In industrial infrastructure, JSW Steel supplied specialized steel for India’s largest blast furnace, collaborating closely with Larsen & Toubro. Their slurry pipeline project, set for completion in 2027, uses steel designed to withstand the abrasive nature of slurry transport. The company also provided heat-resistant steel for Bharat Petroleum’s Kochi Refinery and nuclear-grade steel for the Indira Gandhi Centre for Atomic Research.
 
 JSW Steel contributed to renewable energy infrastructure by supplying corrosion-resistant steel for the Bhadla Solar Park, which had to endure extreme desert conditions.
 
 In the automotive sector, JSW Steel established a 2.3 million tonne per annum auto-grade steel manufacturing facility at Vijayanagar in collaboration with JFE Steel Corp. They supply cold-rolled coils and auto-grade steel to leading automobile manufacturers, including Maruti Suzuki, Tata Motors, Hyundai, Honda, Toyota, and Bajaj Auto. Their just-in-time delivery system and technical collaboration with automakers have strengthened these partnerships, supporting lightweighting and performance improvements in vehicles.
 
-JSW Steel's extensive involvement in infrastructure and automotive projects highlights its strategic role in India's industrial growth, leveraging innovation, quality control, and supply chain efficiency to maintain its leadership in the steel sector.
+JSW Steel’s extensive involvement in infrastructure and automotive projects highlights its strategic role in India’s industrial growth, leveraging innovation, quality control, and supply chain efficiency to maintain its leadership in the steel sector.
 JSW Steel projects
 
 
@@ -473,9 +474,6 @@ Based on the search results, here are additional details about JSW Steel's proje
 - This expansion is expected to be completed by FY24 and will contribute to JSW Steel's goal of achieving 18 MTPA capacity[1].
 
 These projects and investments demonstrate JSW Steel's commitment to contributing to India's infrastructure development and expanding its presence in various sectors, including steel production, port infrastructure, and electric vehicle manufacturing.`
-
-
-
 // Main analysis endpoint that processes form data and calls multiple APIs
 router.post('/run', async (req, res) => {
   try {
@@ -487,116 +485,183 @@ router.post('/run', async (req, res) => {
 
     console.log('Received form data for analysis:', formData);
 
-    // Initialize analysis results object
+    // Extract key decision makers if available
+    const keyDecisionMakers = formData.keyDecisionMakers || [];
+    console.log('Key Decision Makers:', keyDecisionMakers);
+
+    // Initialize results object
     const analysisResults = {
+      success: true,
       timestamp: new Date().toISOString(),
-      companyName: formData.companyName,
+      formData: formData, // Include the original form data
       linkedInData: null,
       companyData: null,
-      procurementData: null,
-      competitorAnalyses: [],
+      marketData: null,
+      aiInsights: null,
+      procurementExecutives: null,
+      CompetitorsEngagement: [],
       errors: []
     };
 
     // 1. Process LinkedIn profiles for key decision makers
-    if (formData.keyDecisionMakers?.length > 0) {
+    if (keyDecisionMakers && keyDecisionMakers.length > 0) {
       try {
-        const linkedInResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/scrape/scrape-keyword', {
-          inputs: formData.keyDecisionMakers.map(person => ({ name: person })),
-          companyName: formData.companyName
+        // Format the data for the LinkedIn scraper API
+        const linkedInInputs = keyDecisionMakers.map(person => ({ name: person }));
+        
+        // Call the LinkedIn scraper endpoint
+        const linkedInResponse = await axios.post('http://localhost:5000/api/scrape/scrape-keyword', {
+          inputs: linkedInInputs,
+          companyName :formData.companyName
         });
+
         analysisResults.linkedInData = linkedInResponse.data;
-      } catch (error) {
+        console.log(`Successfully scraped ${linkedInResponse.data.count} LinkedIn profiles`);
+      } catch (linkedInError) {
+        console.error('Error scraping LinkedIn profiles:', linkedInError);
         analysisResults.errors.push({
-          source: 'LinkedIn',
-          message: error.message
+            source: 'LinkedIn',
+            message: linkedInError.message
         });
       }
     }
 
-    // 2. Process company data using Firecrawl
+    // 2. Process company data using Firecrawl if company name is provided
     if (formData.companyName) {
       try {
-        const firecrawlResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/firecrawl/scrape', {
-          companyName: formData.companyName
-        });
-        analysisResults.companyData = firecrawlResponse.data;
-      } catch (error) {
+          // Call the Firecrawl API to scrape company data
+          const firecrawlResponse = await axios.post('http://localhost:5000/api/firecrawl/scrape', {
+            companyName: formData.companyName
+          });
+          console.log(firecrawlResponse.data)
+          analysisResults.companyData = firecrawlResponse.data;
+          console.log('Successfully scraped company data:', firecrawlResponse.data);
+      } catch (companyError) {
+        console.error('Error scraping company data:', companyError);
         analysisResults.errors.push({
           source: 'Company',
-          message: error.message
+          message: companyError.message
         });
       }
     }
 
-    // 3. Find procurement executives
+    // 3. Find procurement executives using VPScrapper 
     if (formData.companyName) {
       try {
-        const vpScrapperResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/vp/find-procurement-execs', {
+        // Call the VPScrapper API to find procurement executives
+        const vpScrapperResponse = await axios.post('http://localhost:5000/api/vp/find-procurement-execs', {
           companyName: formData.companyName
         });
-        analysisResults.procurementData = vpScrapperResponse.data;
-      } catch (error) {
+        
+        analysisResults.procurementExecutives = vpScrapperResponse.data;
+        console.log('Successfully found procurement executives');
+      } catch (vpError) {
+        console.error('Error finding procurement executives:', vpError);
         analysisResults.errors.push({
-          source: 'Procurement',
-          message: error.message
+            source: 'Procurement Executives',
+            message: vpError.message
         });
       }
     }
-
+    
     // 4. Process competitor analysis
-    if (formData.competitors?.length > 0) {
-      const selectedCompetitors = formData.competitors.filter(comp => comp.selected);
-      
-      // Process competitors in sequence to avoid overwhelming the server
-      for (const competitor of selectedCompetitors) {
-        try {
-          const otherCompResponse = await axios.post('https://high-intelligence-backend.onrender.com/api/othercompetitor/analyze', {
-            companyName: "JSW Steel",
-            JSWContext: contextJSW,
-            competitorcontext: competitor.context,
-            competitorName: competitor.name,
-            dataType: formData.projectDetails
-          });
+    if (formData.competitors && Array.isArray(formData.competitors)) {
+      try {
+        // Get selected competitors
+        const selectedCompetitors = formData.competitors.filter(comp => comp.selected);
+        console.log(`Processing ${selectedCompetitors.length} selected competitors`);
 
-          if (otherCompResponse.data.success) {
-            analysisResults.competitorAnalyses.push({
-              competitor: competitor.name,
-              analysis: otherCompResponse.data.analysis
-            });
+        // Process competitors in batches of 3 to avoid overwhelming the server
+        const batchSize = 3;
+        const allAnalyses = [];
+        
+        for (let i = 0; i < selectedCompetitors.length; i += batchSize) {
+          const batch = selectedCompetitors.slice(i, i + batchSize);
+          console.log(`Processing batch ${i/batchSize + 1} with ${batch.length} competitors`);
+          
+          const batchAnalyses = await Promise.all(
+            batch.map(async (competitor) => {
+              try {
+                console.log(`Starting analysis for competitor: ${competitor.name}`);
+                
+                // Call the otherCompetitor analyze endpoint
+                const otherCompResponse = await axios.post('http://localhost:5000/api/othercompetitor/analyze', {
+                  companyName: "JSW Steel",
+                  competitorName: competitor.name,
+                  dataType: formData.projectDetails || 'TMT', // Default to TMT, can be modified based on requirements
+                  JSWcontext:JSWcontext,
+                  competitorContext:competitor.context,
+                });
+
+                if (otherCompResponse.data.success) {
+                  console.log(`Successfully analyzed competitor: ${competitor.name}`);
+                  return {
+                    competitor: competitor.name,
+                    ...otherCompResponse.data.analysis
+                  };
+                }
+                
+                console.log(`Analysis failed for competitor: ${competitor.name}`);
+                analysisResults.errors.push({
+                    source: 'CompetitorAnalysis',
+                    message: `Analysis failed for ${competitor.name}: No success response`
+                });
+                return null;
+              } catch (error) {
+                console.error(`Error analyzing competitor ${competitor.name}:`, error);
+                analysisResults.errors.push({
+                    source: 'CompetitorAnalysis',
+                    message: `Error analyzing ${competitor.name}: ${error.message}`,
+                    details: error.response?.data || error.message
+                });
+                return null;
+              }
+            })
+          );
+
+          // Add successful analyses from this batch
+          allAnalyses.push(...batchAnalyses.filter(analysis => analysis !== null));
+          
+          // Add a small delay between batches to prevent rate limiting
+          if (i + batchSize < selectedCompetitors.length) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
           }
-        } catch (error) {
+        }
+
+        // Add all successful analyses to the results
+        if (allAnalyses.length > 0) {
+          analysisResults.CompetitorsEngagement = allAnalyses;
+        console.log(`Successfully completed analysis for ${allAnalyses.length} out of ${selectedCompetitors.length} competitors`);
+        } else {
+          console.log('No successful competitor analyses completed');
           analysisResults.errors.push({
-            source: 'CompetitorAnalysis',
-            competitor: competitor.name,
-            message: error.message
+            source: 'CompetitorsEngagement',
+            message: 'No competitor analyses were successful'
           });
         }
+
+
+      } catch (error) {
+        console.error('Error processing competitors:', error);
+        analysisResults.errors.push({
+            source: 'CompetitorsEngagement',
+            message: 'Failed to process competitors',
+            details: error.message
+        });
       }
+    } else {
+      console.log('No competitors to analyze or invalid competitors data');
     }
-
-    // Add summary information
-    analysisResults.summary = {
-      totalCompetitors: formData.competitors?.length || 0,
-      analyzedCompetitors: analysisResults.competitorAnalyses.length,
-      hasErrors: analysisResults.errors.length > 0,
-      completionTime: new Date().toISOString()
-    };
-
-    // Send complete analysis results
-    res.json({
-      success: true,
-      analysisResults
-    });
-
+    // Return the combined results
+    res.json(analysisResults);
   } catch (error) {
     console.error('Error running analysis:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Failed to run analysis',
-      details: error.message
-    });
+      res.status(500).json({ 
+        error: 'Failed to run analysis', 
+        details: error.message 
+      });
   }
 });
 
+// Export the router directly
 module.exports = router; 

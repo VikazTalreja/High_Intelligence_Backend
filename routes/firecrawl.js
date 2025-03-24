@@ -13,7 +13,7 @@ router.post('/scrape', async (req, res) => {
     console.log(`Processing company: ${companyName}`);
 
     // Define the prompt for Perplexity
-    const prompt = `Generate a structured report for ${companyName} in India. Follow these rules:
+    const prompt = `Generate a JSON structured report for ${companyName} in India. Follow these rules:
 
 Mandatory Fields: If data for a field is unavailable, return 0. Do not omit fields.
 Prioritize Indian Sources: MCA21, SEBI, BSE/NSE, GSTIN databases, and Indian business news.
@@ -57,7 +57,7 @@ If <3 news items exist, fill missing entries with 0.
 Technical Adjustments:
 Output JSON with strict 0 for missing fields (e.g., "cash_reserves": 0).
 Use proxies/rotating headers for sites like Zauba Corp or MCA21 to avoid blocking.
-Handle CAPTCHAs on GST Portal/Udyam Registration ethically (e.g., manual solve).`;
+Handle CAPTCHAs on GST Portal/Udyam Registration ethically (e.g., manual solve). give me complete`;
 
     // Call Perplexity API to search for company information
     try {
@@ -83,6 +83,7 @@ Handle CAPTCHAs on GST Portal/Udyam Registration ethically (e.g., manual solve).
       // Extract and parse the JSON response
       const responseContent = perplexityResponse.data.choices[0].message.content;
       let perplexityData;
+      console.log(responseContent)
       
       try {
         // Find the JSON object in the response

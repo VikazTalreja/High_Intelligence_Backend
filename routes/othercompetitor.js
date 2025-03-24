@@ -2,42 +2,42 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
-async function queryDeepSeek(companyName ,competitorName, dataType , competitorcontext , JSWContext) {
+async function queryDeepSeek(companyName , competitorName, dataType , competitorcontext , JSWContext) {
   try {
     const systemPrompt = `Act as a steel industry strategist for JSW Steel. Generate a comprehensive battle card with hyper-personalized insights and killer differentiators using the following detailed information:
 - JSWContext: ${JSWContext}
 - Competitor Context: ${competitorcontext}
 
 1. **Competitor Weakness Exploitation**
-   - **Project History Analysis**: Analyze historical project data from competitor.context to identify competitor weaknesses.
-     - Example: If competitor.context mentions delays or defects, highlight them.
-   - **Contractual Risks**: Highlight any known disputes or arbitration cases from competitor.context.
-     - Example: If competitor.context mentions a dispute with NHAI over defective TMT bars, include this.
-   - **Geographic Vulnerability**: Compare plant locations from JSWContext and competitor.context to show JSW's proximity advantage.
+   - **Project History Analysis**: Analyze historical project data from competitorcontext to identify competitor weaknesses.
+     - Example: If competitorcontext mentions delays or defects, highlight them.
+   - **Contractual Risks**: Highlight any known disputes or arbitration cases from competitorcontext.
+     - Example: If competitorcontext mentions a dispute with NHAI over defective TMT bars, include this.
+   - **Geographic Vulnerability**: Compare plant locations from JSWContext and competitorcontext to show JSW's proximity advantage.
      - Example: If JSWContext mentions Vijayanagar plant is closer to the project site, highlight this.
 
 2. **Decision-Maker Tailoring**
-   - **Career-Based Triggers**: Tailor insights based on the decision-maker's career history from competitor.context.
+   - **Career-Based Triggers**: Tailor insights based on the decision-maker's career history from competitorcontext.
      - Example: If the decision-maker worked at Tata Steel, use JSWContext to highlight JSW's faster inventory cycle.
    - **Value Alignment**: Align with the decision-maker's values (e.g., sustainability) using JSWContext.
      - Example: If JSWContext mentions JSW's use of renewable energy, highlight this.
-   - **Reputation Risks**: Address reputation risks from competitor.context.
-     - Example: If competitor.context mentions cost overruns with a competitor, include this.
+   - **Reputation Risks**: Address reputation risks from competitorcontext.
+     - Example: If competitorcontext mentions cost overruns with a competitor, include this.
 
 3. **Strategic Nuclear Insights**
-   - **Hidden Connections**: Reveal hidden industry risks from competitor.context.
-     - Example: If competitor.context mentions Tata Steel's UK restructuring, highlight this as a risk to Indian supply.
+   - **Hidden Connections**: Reveal hidden industry risks from competitorcontext.
+     - Example: If competitorcontext mentions Tata Steel's UK restructuring, highlight this as a risk to Indian supply.
    - **Future-Proofing**: Use JSWContext to highlight JSW's strategic advantages.
      - Example: If JSWContext mentions JSW's Blackwater coal mine bid, include this as a future cost-saving measure.
    - **Industry Trends**: Highlight certifications and mandates from JSWContext.
      - Example: If JSWContext mentions JSW's Steel Sustainability Champion certification, include this.
 
 4. **Quantitative Product Differentiation**
-   - **Quality Metrics**: Compare product quality metrics from JSWContext and competitor.context.
+   - **Quality Metrics**: Compare product quality metrics from JSWContext and competitorcontext.
      - Example: If JSWContext mentions JSW's defect rate is 0.8%, compare it to the competitor's rate.
    - **Certification Edge**: Highlight certifications and approvals from JSWContext.
      - Example: If JSWContext mentions JSW's automotive steel is certified by 6 global OEMs, include this.
-   - **Failure Rate Data**: Provide failure rate comparisons from JSWContext and competitor.context.
+   - **Failure Rate Data**: Provide failure rate comparisons from JSWContext and competitorcontext.
      - Example: If JSWContext mentions JSW's failure rate is 0.8%, compare it to the industry average.
 
 5. **Execution Guarantees**
@@ -69,7 +69,7 @@ Nuclear Insight
 Execution Guarantee
 “We’ll station 10 engineers onsite – a service Tata withdrew from L&T’s Nagpur project.”
 Closing Script
-“Choose JSW, and I’ll draft a clause holding our CMO personally liable for delays. Let’s make your promotion inevitable.””`
+“Choose JSW, and I’ll draft a clause holding our CMO personally liable for delays. Let’s make your promotion inevitable.”`
 
 
     const userPrompt = `Analyze ${companyName} (JSW Steel) vs ${competitorName} for ${dataType} using the provided context:
@@ -81,17 +81,17 @@ Return the data in the following JSON format:
 {
   "priceComparison": {
     "jswSteelPrice": "[amount from JSWContext]",
-    "competitorPrice": "[amount from competitor.context]",
+    "competitorPrice": "[amount from competitorcontext]",
     "percentageDifference": "[X]%"
   },
   "marketPosition": {
     "marketShare": "[current market share from JSWContext]",
     "regionalStrengths": "[regional strengths from JSWContext]",
-    "distributionNetwork": "[distribution network comparison from JSWContext and competitor.context]",
+    "distributionNetwork": "[distribution network comparison from JSWContext and competitorcontext]",
     "manufacturingCapabilities": "[manufacturing capabilities from JSWContext]"
   },
   "productQuality": {
-    "steelGradeComparisons": "[steel grade comparisons from JSWContext and competitor.context]",
+    "steelGradeComparisons": "[steel grade comparisons from JSWContext and competitorcontext]",
     "qualityCertifications": "[quality certifications from JSWContext]",
     "productRangeAvailability": "[product range availability from JSWContext]",
     "technicalSpecifications": "[technical specifications from JSWContext]"
@@ -103,10 +103,10 @@ Return the data in the following JSON format:
     "transportationCapabilities": "[transportation capabilities from JSWContext]"
   },
   "financialStability": {
-    "creditTermsComparison": "[credit terms comparison from JSWContext and competitor.context]",
+    "creditTermsComparison": "[credit terms comparison from JSWContext and competitorcontext]",
     "paymentFlexibility": "[payment flexibility from JSWContext]",
     "financialHealthIndicators": "[financial health indicators from JSWContext]",
-    "riskAssessment": "[risk assessment from competitor.context]"
+    "riskAssessment": "[risk assessment from competitorcontext]"
   },
   "competitiveAdvantages": {
     "environmentalCompliance": "[environmental compliance from JSWContext]",
@@ -128,14 +128,8 @@ Provide a structured analysis with specific data points and actionable insights.
       {
         model: "deepseek-chat",
         messages: [
-          {
-            role: "system",
-            content: systemPrompt
-          },
-          {
-            role: "user",
-            content: userPrompt
-          }
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userPrompt }
         ],
         temperature: 0.3,
         max_tokens: 2000
@@ -144,7 +138,9 @@ Provide a structured analysis with specific data points and actionable insights.
         headers: {
           'Authorization': `Bearer ${process.env.DEEPSEEK_API_KEY}`,
           'Content-Type': 'application/json'
-        }
+        },
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
       }
     );
 
@@ -175,11 +171,12 @@ function getCompetitorSpecificMoats(competitorName) {
   };
   return moats[competitorName] || 'Standard competitive advantages apply';
 }
++
 
 // Endpoint to analyze competitor
 router.post('/analyze', async (req, res) => {
   try {
-    const { companyName, competitorName, dataType ,competitorcontext , JSWContext } = req.body;
+    const { companyName, competitorName, dataType ,JSWcontext, competitorContext } = req.body
 
     if (!competitorName || !dataType || !companyName) {
       return res.status(400).json({
@@ -188,7 +185,7 @@ router.post('/analyze', async (req, res) => {
       });
     }
 
-    const analysisString = await queryDeepSeek(companyName ,competitorName, dataType , competitorcontext , JSWContext);
+    const analysisString = await queryDeepSeek(companyName ,competitorName, dataType , JSWcontext, competitorContext);
     
     // More robust JSON extraction
     let cleanJsonString = analysisString;
