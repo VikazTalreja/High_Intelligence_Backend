@@ -4,58 +4,58 @@ const router = express.Router();
 
 async function queryDeepSeek(companyName ,competitorName, dataType , competitorcontext , JSWContext) {
   try {
-    const systemPrompt = `Act as a steel industry strategist for JSW Steel. Generate a battle card with hyper-personalized insights and killer differentiators using:
+    const systemPrompt = `Act as a steel industry strategist for JSW Steel. Generate a comprehensive battle card with hyper-personalized insights and killer differentiators using the following detailed information:
+- JSWContext: ${JSWContext}
+- Competitor Context: ${competitorcontext}
 
-1. Competitor Weakness Exploitation
+1. **Competitor Weakness Exploitation**
+   - **Project History Analysis**: Analyze historical project data from competitor.context to identify competitor weaknesses.
+     - Example: If competitor.context mentions delays or defects, highlight them.
+   - **Contractual Risks**: Highlight any known disputes or arbitration cases from competitor.context.
+     - Example: If competitor.context mentions a dispute with NHAI over defective TMT bars, include this.
+   - **Geographic Vulnerability**: Compare plant locations from JSWContext and competitor.context to show JSW's proximity advantage.
+     - Example: If JSWContext mentions Vijayanagar plant is closer to the project site, highlight this.
 
-Project History Analysis:
-Example: “Tata Steel delayed delivery for L&T’s Nagpur-Mumbai Highway (2023) by 22 days due to blast furnace maintenance at Jamshedpur. JSW’s Vijayanagar plant is 300 km closer to Varanasi, ensuring 94% on-time delivery (FY2024).”
-Contractual Risks:
-Highlight disputes (e.g., “AM/NS faced arbitration with NHAI in 2022 over defective TMT bars”).
-Geographic Vulnerability:
-Map competitor plant locations vs. JSW’s proximity to project site.
-2. Decision-Maker Tailoring
+2. **Decision-Maker Tailoring**
+   - **Career-Based Triggers**: Tailor insights based on the decision-maker's career history from competitor.context.
+     - Example: If the decision-maker worked at Tata Steel, use JSWContext to highlight JSW's faster inventory cycle.
+   - **Value Alignment**: Align with the decision-maker's values (e.g., sustainability) using JSWContext.
+     - Example: If JSWContext mentions JSW's use of renewable energy, highlight this.
+   - **Reputation Risks**: Address reputation risks from competitor.context.
+     - Example: If competitor.context mentions cost overruns with a competitor, include this.
 
-Career-Based Triggers:
-If decision-maker worked at Tata Steel: “As someone familiar with Tata’s 87 inventory days, JSW’s 34-day cycle ensures 2x faster restocking.”
-Value Alignment:
-If sustainability-focused: “JSW’s Piombino plant uses 100% renewable energy vs. Tata’s Port Talbot coal dependency.”
-Reputation Risks:
-“Your predecessor faced cost overruns with Competitor X – JSW’s fixed-price contracts eliminate escalation risks.”
-3. Strategic Nuclear Insights
+3. **Strategic Nuclear Insights**
+   - **Hidden Connections**: Reveal hidden industry risks from competitor.context.
+     - Example: If competitor.context mentions Tata Steel's UK restructuring, highlight this as a risk to Indian supply.
+   - **Future-Proofing**: Use JSWContext to highlight JSW's strategic advantages.
+     - Example: If JSWContext mentions JSW's Blackwater coal mine bid, include this as a future cost-saving measure.
+   - **Industry Trends**: Highlight certifications and mandates from JSWContext.
+     - Example: If JSWContext mentions JSW's Steel Sustainability Champion certification, include this.
 
-Hidden Connections:
-“Tata Steel’s UK restructuring will divert 15% of their HR coil capacity to Europe, risking supply for Indian infra projects. JSW’s Vijayanagar expansion guarantees priority allocation.”
-Future-Proofing:
-“JSW’s Blackwater coal mine bid (2024) will reduce raw material costs by 8% by 2026 – savings we’ll pass to you.”
-Industry Trends:
-“NHAI now mandates Steel Sustainability Champion certification (which JSW holds) for all >₹500cr projects.”
-4. Quantitative Product Differentiation
+4. **Quantitative Product Differentiation**
+   - **Quality Metrics**: Compare product quality metrics from JSWContext and competitor.context.
+     - Example: If JSWContext mentions JSW's defect rate is 0.8%, compare it to the competitor's rate.
+   - **Certification Edge**: Highlight certifications and approvals from JSWContext.
+     - Example: If JSWContext mentions JSW's automotive steel is certified by 6 global OEMs, include this.
+   - **Failure Rate Data**: Provide failure rate comparisons from JSWContext and competitor.context.
+     - Example: If JSWContext mentions JSW's failure rate is 0.8%, compare it to the industry average.
 
-Quality Metrics:
-“JSW Neosteel TMT bars have 550 MPa yield strength vs. Competitor’s 500 MPa (IS 1786).”
-Certification Edge:
-“JSW’s automotive steel is certified by 6 global OEMs; Competitor X has 3.”
-Failure Rate Data:
-“JSW’s defect rate: 0.8% vs. industry average 2.1% (World Steel Association, 2024).”
-5. Execution Guarantees
+5. **Execution Guarantees**
+   - **Risk Mitigation**: Detail risk mitigation strategies from JSWContext.
+     - Example: If JSWContext mentions GPS-tracked shipments, include this.
+   - **Penalty Clauses**: Include penalty clauses from JSWContext.
+     - Example: If JSWContext mentions a 1.5%/day penalty for delays, include this.
 
-Risk Mitigation:
-“JSW will deploy a dedicated logistics team from Dolvi Works (100 km from project) with GPS-tracked shipments.”
-Penalty Clauses:
-“Include a 1.5%/day penalty for delays in the contract – a clause Competitor X rejected in 2023.”
-6. Output Format
+6. **Output Format**
+   - Generate a battle card with the following sections:
+     - Project-Specific Price Comparison (₹/tonne, 5-year TCO analysis)
+     - Competitor’s Historical Vulnerabilities (Past failures with target company)
+     - Decision-Maker Triggers (Personalized hooks)
+     - Nuclear Insights (Industry foresight)
+     - Execution Playbook (Logistics, risk mitigation)
+     - Closing Script (Tailored pitch for procurement team)
 
-Generate a battle card with these sections (strictly use 0 for missing data):
-
-Project-Specific Price Comparison (₹/tonne, 5-year TCO analysis)
-Competitor’s Historical Vulnerabilities (Past failures with target company)
-Decision-Maker Triggers (Personalized hooks)
-Nuclear Insights (Industry foresight)
-Execution Playbook (Logistics, risk mitigation)
-Closing Script (Tailored pitch for procurement team)
 Example Output (Excerpt):
-
 Battle Card: JSW Steel vs. Tata Steel
 Project: Varanasi Phase 3 Highway | Decision-Maker: Mr. Sharma (Ex-Tata Steel, Prioritizes Speed)
 
@@ -69,8 +69,7 @@ Nuclear Insight
 Execution Guarantee
 “We’ll station 10 engineers onsite – a service Tata withdrew from L&T’s Nagpur project.”
 Closing Script
-“Choose JSW, and I’ll draft a clause holding our CMO personally liable for delays. Let’s make your promotion inevitable.
-”`
+“Choose JSW, and I’ll draft a clause holding our CMO personally liable for delays. Let’s make your promotion inevitable.””`
 
 
     const userPrompt = `Analyze ${companyName} (JSW Steel) vs ${competitorName} for ${dataType} using the provided context:
@@ -180,7 +179,7 @@ function getCompetitorSpecificMoats(competitorName) {
 // Endpoint to analyze competitor
 router.post('/analyze', async (req, res) => {
   try {
-    const { companyName, competitorName, dataType } = req.body;
+    const { companyName, competitorName, dataType ,competitorcontext , JSWContext } = req.body;
 
     if (!competitorName || !dataType || !companyName) {
       return res.status(400).json({
@@ -189,7 +188,7 @@ router.post('/analyze', async (req, res) => {
       });
     }
 
-    const analysisString = await queryDeepSeek(companyName ,competitorName, dataType);
+    const analysisString = await queryDeepSeek(companyName ,competitorName, dataType , competitorcontext , JSWContext);
     
     // More robust JSON extraction
     let cleanJsonString = analysisString;

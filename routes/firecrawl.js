@@ -62,7 +62,7 @@ Handle CAPTCHAs on GST Portal/Udyam Registration ethically (e.g., manual solve).
     // Call Perplexity API to search for company information
     try {
       const perplexityResponse = await axios.post('https://api.perplexity.ai/chat/completions', {
-        model: 'sonar',
+        model: 'sonar-pro',
         messages: [
           {
             role: 'system',
